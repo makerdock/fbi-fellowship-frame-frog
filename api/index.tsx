@@ -31,10 +31,8 @@ app.frame('/', async (c) => {
 
   let state = buttonValue || "state:intro"
 
-  // const fid = c.frameData?.fid
+  const fid = c.frameData?.fid
   const castHash = c.frameData?.castId.hash
-
-  const fid = 479
 
   const isFollower = fid && await checkFollower(fid)
   const castDetails = fid && castHash && await checkCast(castHash, fid)
