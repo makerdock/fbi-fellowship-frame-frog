@@ -4,6 +4,8 @@ import { serveStatic } from 'frog/serve-static'
 
 // import { neynar } from 'frog/hubs'
 import { handle } from 'frog/vercel'
+import { checkFollower } from '../utils/checkFollower.js'
+import { checkCast } from '../utils/checkCast.js'
 
 // Uncomment to use Edge Runtime.
 // export const config = {
@@ -17,18 +19,38 @@ export const app = new Frog({
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
 })
 
-app.frame('/', (c) => {
+const imageMap: Record<string, string> = {
+  "state:eval": 'success.png',
+  "state:intro": 'intro.png',
+  "state:retry": 'error.png',
+}
+
+app.frame('/', async (c) => {
   const origin = c.url.split('/api')[0]
   const { buttonValue } = c
-  console.log("🚀 ~ app.frame ~ buttonValue:", buttonValue)
 
-  const state = buttonValue || "state:intro"
+  let state = buttonValue || "state:intro"
+
+  // const fid = c.frameData?.fid
+  const castHash = c.frameData?.castId.hash
+
+  const fid = 479
+
+  const isFollower = fid && await checkFollower(fid)
+  const castDetails = fid && castHash && await checkCast(castHash, fid)
+
+  const isValid = isFollower.following && castDetails?.liked && castDetails?.recasted
+
+  if (!isValid && state === "state:eval") {
+    state = "state:retry"
+  }
 
   return c.res({
-    image: origin + '/images/intro.png',
+    image: origin + '/images/' + imageMap[state],
     intents: [
       state === 'state:intro' && <Button value={"state:eval"}>Know more</Button>,
-      state === 'state:eval' && <Button value={"state:eval"}>Retry</Button>,
+      state === 'state:eval' && <Button.Link href="https://0xfbi.com/based-fellowship">Tell me more</Button.Link>,
+      state === 'state:retry' && <Button value={'state:eval'}>Retry</Button>,
     ],
   })
 })
