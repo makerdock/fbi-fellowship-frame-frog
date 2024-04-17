@@ -34,12 +34,17 @@ app.frame('/', async (c) => {
 
 
   const fid = c.frameData?.fid
+  console.log("🚀 ~ app.frame ~ fid:", fid)
   const castHash = c.frameData?.castId.hash
+  console.log("🚀 ~ app.frame ~ castHash:", castHash)
 
   const isFollower = fid && await checkFollower(fid)
+  console.log("🚀 ~ app.frame ~ isFollower:", isFollower)
   const castDetails = fid && castHash && await checkCast(castHash, fid)
+  console.log("🚀 ~ app.frame ~ castDetails:", castDetails)
 
   const isValid = isFollower?.following && castDetails?.liked && castDetails?.recasted
+  console.log("🚀 ~ app.frame ~ isFollower?.following && castDetails?.liked && castDetails?.recasted:", isFollower?.following, castDetails?.liked, castDetails?.recasted)
 
   if (!isValid && state === "state:eval") {
     state = "state:retry"
