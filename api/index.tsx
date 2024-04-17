@@ -32,6 +32,7 @@ app.frame('/', async (c) => {
 
   let state = buttonValue || "state:intro"
 
+
   const fid = c.frameData?.fid
   const castHash = c.frameData?.castId.hash
 
