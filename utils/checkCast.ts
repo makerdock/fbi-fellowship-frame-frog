@@ -11,7 +11,7 @@ export const checkCast = async (castHash: string, fid: number) => {
             .then(response => response.json())
         console.log("🚀 ~ checkCast ~ response:", JSON.stringify(response))
 
-        return response.result.casts?.[0].viewer_context
+        return response.result?.casts?.[0].viewer_context
     } catch (error) {
         console.error(error)
     }
