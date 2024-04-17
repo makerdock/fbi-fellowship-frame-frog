@@ -39,7 +39,7 @@ app.frame('/', async (c) => {
   const isFollower = fid && await checkFollower(fid)
   const castDetails = fid && castHash && await checkCast(castHash, fid)
 
-  const isValid = isFollower.following && castDetails?.liked && castDetails?.recasted
+  const isValid = isFollower?.following && castDetails?.liked && castDetails?.recasted
 
   if (!isValid && state === "state:eval") {
     state = "state:retry"
