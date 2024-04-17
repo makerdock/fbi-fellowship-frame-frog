@@ -40,7 +40,7 @@ app.frame('/', async (c) => {
 
   const isFollower = fid && await checkFollower(fid)
   console.log("🚀 ~ app.frame ~ isFollower:", isFollower)
-  const castDetails = fid && castHash && await checkCast(castHash, fid)
+  const castDetails = !!fid && !!castHash && await checkCast(castHash, fid) || undefined
   console.log("🚀 ~ app.frame ~ castDetails:", castDetails)
 
   const isValid = isFollower?.following && castDetails?.liked && castDetails?.recasted
