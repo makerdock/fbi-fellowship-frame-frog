@@ -2,7 +2,7 @@ export const checkCast = async (castHash: string, fid: number) => {
     try {
         const options = {
             method: 'GET',
-            headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' }
+            headers: { accept: 'application/json', api_key: process.env.NEYNAR_API_KEY || '' }
         };
 
         const url = `https://api.neynar.com/v2/farcaster/casts?casts=${castHash}&viewer_fid=${fid}`

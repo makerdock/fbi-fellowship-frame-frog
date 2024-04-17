@@ -5,7 +5,7 @@ export const checkFollower = async (fid: number) => {
     try {
         const options = {
             method: 'GET',
-            headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' }
+            headers: { accept: 'application/json', api_key: process.env.NEYNAR_API_KEY || '' }
         };
 
         const url = `https://api.neynar.com/v2/farcaster/user/bulk?fids=${SAXENASAHEB_FID}&viewer_fid=${fid}`

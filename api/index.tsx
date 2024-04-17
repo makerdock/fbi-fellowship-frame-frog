@@ -6,6 +6,7 @@ import { serveStatic } from 'frog/serve-static'
 import { handle } from 'frog/vercel'
 import { checkFollower } from '../utils/checkFollower.js'
 import { checkCast } from '../utils/checkCast.js'
+import { neynar } from 'frog/hubs'
 
 // Uncomment to use Edge Runtime.
 // export const config = {
@@ -16,7 +17,7 @@ export const app = new Frog({
   assetsPath: '/',
   basePath: '/api',
   // Supply a Hub to enable frame verification.
-  // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
+  hub: neynar({ apiKey: process.env.NEYNAR_API_KEY || '' })
 })
 
 const imageMap: Record<string, string> = {
