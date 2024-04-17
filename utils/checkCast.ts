@@ -10,7 +10,7 @@ export const checkCast = async (castHash: string, fid: number) => {
         const response = await fetch(url, options)
             .then(response => response.json())
 
-        return response.casts?.[0].viewer_context
+        return response.results.casts?.[0].viewer_context
     } catch (error) {
         console.error(error)
     }
